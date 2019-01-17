@@ -1,0 +1,200 @@
+#include<stdio.h>
+#include<math.h>
+
+int main(){
+	int base,num,selection;
+	int sum,cout,temp,numBase2,numBase10,numBase16,i=0;
+	int o1,o2,o3,c,div1,A,div3,cin,B,r3,b; //input will be taken from the user.
+	
+	
+	printf("Welcome to the Full-adder\n");
+	printf("(1) Compute and display the outputs\n");
+	printf("(2)Quit\n");
+	scanf("%d",&selection);
+	
+	while(selection > 2){ //controls selection 1 or 2
+		printf("\nInvalid value\n");
+		
+		printf("Welcome to the Full-adder\n");
+		printf("(1) Compute and display the outputs\n");
+		printf("(2)Quit\n");
+		scanf("%d",&selection);
+	}
+	
+	while(selection <= 2){ //main loop
+		if( selection == 2 )	break; //if the input is 2, it closes itself.
+		
+		printf("You have chosen option 1 \n");
+		printf("\nWhich base will you use to enter data lines(base 2,8,16): ");
+		scanf("%d",&base);
+		
+		while( (base != 2) && (base != 8)&& (base != 16)){ //base control
+			printf("\nInvalid value\n");
+			printf("\nSelect the base(2,8,16): ");
+			scanf("%d",&base);
+		}
+		
+		
+		
+		if(base==2) //process that does the base 2
+		{
+			
+			printf("\nEnter a number: ");
+			scanf("%d",&num);
+			temp = num;
+			
+			int check = 0; //the variable that controls number-base2 if the input 3 digits  
+			
+			while( temp > 0 ) //the loop that checks if base digit is not proper 
+			{
+				if( temp%10 >= 2)
+				{
+					printf("\ninvalid value please reenter the value\n");
+					printf("enter a number: ");
+					scanf("%d",&num);
+					temp = num;
+				}
+				temp /=10;
+				check++;
+				if(check > 3)
+				{
+					printf("\nInvalid value please reenter the value\n");
+					printf("Enter a number: ");
+					scanf("%d",&num);
+					temp = num;
+					check = 0;
+				}
+			}
+			//these lines pars the digit into 3 (A,B,cin)
+			cin= num % 10; 
+			b= num / 10;
+			B= b % 10;
+			A= b / 10;	
+		
+		}
+		else if(base==8) //
+		{
+			printf("\nEnter a number: ");
+			scanf("%d",&num);
+			temp = num;
+			
+			while( temp >= 7 ) //controls input if it has 3 binary digits
+			{
+				if( temp%10 >= 8)
+				{
+					printf("\nOctal %d cannot be represented with 3 bits! Please try again !",num);
+					printf("\nEnter a number: ");
+					scanf("%d",&num);
+					temp = num;
+				}
+				temp /=10;
+			}
+			
+			temp = num;
+			i=0;
+			
+			while (temp != 0) //converts number to base 10
+		    {
+		        numBase10 =  numBase10 +(temp % 10)* pow(8, i++);
+		        temp = temp / 10;
+		    }
+			
+			
+			
+			i=0;
+			numBase2 = 0;
+			while(numBase10 != 0) { //converts number from decimal to binary.
+		        numBase2 += numBase10%2*(pow(10,i));
+		        numBase10 = numBase10/2;
+		        i++;
+		    }
+			
+			//these lines pars the digit into 3 (A,B,cin)
+			cin = numBase2 % 10; 
+			numBase2/=10;
+			B = numBase2 % 10;
+			numBase2/=10;
+			A = numBase2 % 10;
+			
+ 	
+			
+			
+		}	
+		else if (base == 16)
+		{
+			printf("\nEnter a number: ");
+			scanf("%d",&num);
+	
+			while(num > 6) //checks the input if it has 3 binary digits.
+			{
+				printf("\nHexadecimal %d cannot be represented with 3 digits!Please try again! \n",num);
+				printf("\nEnter a number: ");
+				scanf("%d",&num);
+		
+			}
+			
+			temp = num;
+			i=0;
+			
+			while (temp != 0) // converts number to decimal
+		    {
+		        numBase16 =  numBase16 +(temp % 10)* pow(16, i++);
+		        temp = temp / 10;
+		    }
+			
+			
+			
+			i=0;
+			numBase2 = 0;
+			while(numBase16 != 0) {//converts number from decimal to binary.
+		        numBase2 += numBase16%2*(pow(10,i));
+		        numBase16 = numBase16/2;
+		        i++;
+		    }
+			
+			
+			//these lines pars the digit into 3 (A,B,cin)
+			cin = numBase2 % 10; 
+			numBase2/=10;
+			B = numBase2 % 10;
+			numBase2/=10;
+			A = numBase2 % 10;			
+		}
+		
+		
+		//these lines does the process in the table.
+		if(A+B+cin == 0)
+		{
+			sum=0;
+			cout=0;
+		}
+		else if(A+B+cin == 1)
+		{
+			sum=1;
+			cout=0;	
+		}
+		else if(A+B+cin == 2)
+		{
+			sum=0;
+			cout=1;
+		}
+		else if(A+B+cin == 3)
+		{
+			sum=1;
+			cout=1;
+		}
+		printf("Sum is %d C_out is %d \n",sum,cout);
+		
+		
+		printf("\n\nWelcome to the Full-adder\n");
+		printf("(1) Compute and display the outputs\n");
+		printf("(2)Quit\n");
+		scanf("%d",&selection);
+	}
+	
+	
+	printf("\nYou have chosen option 2\n");
+	printf("Bye");
+			
+	return 0;	
+}
